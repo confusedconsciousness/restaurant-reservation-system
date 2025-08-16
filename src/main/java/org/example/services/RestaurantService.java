@@ -1,15 +1,12 @@
 package org.example.services;
 
 import org.example.enums.Cuisine;
-import org.example.filters.CuisineFilter;
 import org.example.filters.Filter;
-import org.example.filters.NameFilter;
 import org.example.models.Address;
 import org.example.models.Restaurant;
 import org.example.repositories.RestaurantRepository;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 public class RestaurantService {
@@ -20,6 +17,7 @@ public class RestaurantService {
     }
 
     public Restaurant registerRestaurant(String name, Set<Cuisine> cuisines,
+                                         boolean veg,
                                          String street,
                                          String city,
                                          String state,
@@ -41,6 +39,7 @@ public class RestaurantService {
         }
         restaurant.setName(name);
         restaurant.setCuisines(cuisines);
+        restaurant.setVeg(veg);
         restaurant.setAddress(new Address(street, city, state, zip));
         restaurant.setPhoneNumber(phoneNumber);
         restaurant.setCostOfTwo(costOfTwo);
@@ -56,18 +55,13 @@ public class RestaurantService {
         }
     }
 
-    public List<Restaurant> searchRestaurant(Map<String, String> searchParams) {
+    public List<Restaurant> searchRestaurant(Filter filter) {
         List<Restaurant> restaurants = repository.getAllRestaurants();
-        if (searchParams == null || searchParams.isEmpty()) {
-            return restaurants;
+        if (filter == null) {
+            return restaurants; // No filter applied, return all restaurants
         }
-        List<Filter> filters = List.of(new CuisineFilter(), new NameFilter());
-        for (Filter filter : filters) {
-            if (searchParams.containsKey(filter.getName())) {
-                restaurants = filter.applyFilter(restaurants, searchParams.get(filter.getName()));
-            }
-        }
-        return restaurants;
+        return restaurants.stream().filter(filter::apply)
+                .toList();
     }
 
     public Restaurant getRestaurantById(String id) {

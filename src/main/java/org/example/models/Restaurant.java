@@ -17,7 +17,7 @@ public class Restaurant {
     private String name;
     private Set<Cuisine> cuisines;
     private double costOfTwo;
-
+    private boolean isVeg;
     // we can use the opening and closing hour to figure how many slots are available
     // for e.g. if I want to book a slot at 13:00 hour for 20 people but the only 10 seats are available,
 // then we can return an error that the slot is not available

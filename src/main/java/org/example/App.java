@@ -1,6 +1,7 @@
 package org.example;
 
 import org.example.enums.Cuisine;
+import org.example.filters.*;
 import org.example.models.Restaurant;
 import org.example.repositories.BookingRepository;
 import org.example.repositories.BookingRepositoryImpl;
@@ -10,7 +11,6 @@ import org.example.services.BookingService;
 import org.example.services.RestaurantService;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 public class App {
@@ -24,6 +24,7 @@ public class App {
         //  let's add  a dummy restaurant
         Restaurant roxie = restaurantService.registerRestaurant("Roxie",
                 Set.of(Cuisine.ITALIAN),
+                true,
                 "Harlur",
                 "Bangalore",
                 "Karnataka",
@@ -37,6 +38,7 @@ public class App {
         //  let's add another restaurant
         Restaurant bierLibrary = restaurantService.registerRestaurant("Bier Library",
                 Set.of(Cuisine.INDIAN, Cuisine.FRENCH, Cuisine.CHINESE),
+                false,
                 "Whitefield",
                 "Bangalore",
                 "Karnataka",
@@ -50,7 +52,8 @@ public class App {
 
         System.out.println("################ SEARCH RESTAURANTS ################################");
 
-        List<Restaurant> foundRestaurants = restaurantService.searchRestaurant(Map.of("cuisine", Cuisine.ITALIAN.getDisplayName(), "name", "Roxie"));
+        Filter filter = new AndFilter(new CityFilter("bangalore"), new VegFilter(false));
+        List<Restaurant> foundRestaurants = restaurantService.searchRestaurant(filter);
         if (foundRestaurants.isEmpty()) {
             System.out.println("No restaurants found with the specified criteria.");
         } else {
@@ -60,7 +63,8 @@ public class App {
             }
         }
 
-        foundRestaurants = restaurantService.searchRestaurant(Map.of("cuisine", Cuisine.THAI.getDisplayName()));
+        filter = new CuisingFilter(Cuisine.AMERICAN);
+        foundRestaurants = restaurantService.searchRestaurant(filter);
         if (foundRestaurants.isEmpty()) {
             System.out.println("No restaurants found with the specified criteria.");
         } else {

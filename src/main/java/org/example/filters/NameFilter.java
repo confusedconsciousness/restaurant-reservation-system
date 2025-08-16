@@ -2,16 +2,15 @@ package org.example.filters;
 
 import org.example.models.Restaurant;
 
-import java.util.List;
-
 public class NameFilter implements Filter {
+    private String restaurantName;
 
-    @Override
-    public List<Restaurant> applyFilter(List<Restaurant> restaurants, String value) {
-        return restaurants.stream().filter(r -> r.getName() != null && r.getName().contains(value)).toList();
+    public NameFilter(String restaurantName) {
+        this.restaurantName = restaurantName;
     }
 
-    public String getName() {
-        return "name";
+    @Override
+    public boolean apply(Restaurant restaurant) {
+        return restaurantName.equals(restaurant.getName());
     }
 }
