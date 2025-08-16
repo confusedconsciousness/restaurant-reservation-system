@@ -50,12 +50,4 @@ public class Restaurant {
         slotAvailability.get(date).put(time, availableSlots - tables);
         return true;
     }
-
-    public boolean isSlotAvailable(String date, String time, int tables) {
-        if (!slotAvailability.containsKey(date)) {
-            return false; // No slots available for this date
-        }
-        int availableSlots = slotAvailability.get(date).getOrDefault(time, 0);
-        return availableSlots >= tables; // Check if enough slots are available
-    }
 }

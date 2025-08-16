@@ -37,17 +37,24 @@ public class BookingService {
             System.out.println("Booking date must be within the next 2 days");
             return Optional.empty();
         }
-        synchronized (restaurant) {
-            // book the slot
-            if (restaurant.bookSlot(date, time, numberOfTables)) {
-                // create a booking record
-                Booking booking = new Booking(userId, restaurantId, date, time, numberOfTables);
-                booking.setBookingStatus(BookingStatus.CONFIRMED);
-                return Optional.of(bookingRepository.save(booking));
-            } else {
-                System.out.println("Not enough slots available for the requested date and time");
-                return Optional.empty(); // or throw an exception
-            }
+        return createBooking(userId, restaurant, date, time, numberOfTables);
+    }
+
+    private synchronized Optional<Booking> createBooking(String userId,
+                                                         Restaurant restaurant,
+                                                         String date,
+                                                         String time,
+                                                         int numberOfTables) {
+        // book the slot
+        if (restaurant.bookSlot(date, time, numberOfTables)) {
+            // create a booking record
+            Booking booking = new Booking(userId, restaurant.getId(), date, time, numberOfTables);
+            booking.setBookingStatus(BookingStatus.CONFIRMED);
+            return Optional.of(bookingRepository.save(booking));
+        } else {
+            System.out.println("Not enough slots available for the requested date and time");
+            return Optional.empty(); // or throw an exception
         }
+
     }
 }

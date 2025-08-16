@@ -50,6 +50,14 @@ public class App {
         bierLibrary.addSlot("17-08-2025", "19:00", 5);
         System.out.println("Successfully registered restaurant: " + bierLibrary);
 
+
+        restaurantService.updateTimeSlots(bierLibrary.getId(), "17-08-2025", "14:00", 5);
+        restaurantService.updateTimeSlots(bierLibrary.getId(), "17-08-2025", "19:00", 5);
+        restaurantService.updateTimeSlots(roxie.getId(), "17-08-2025", "11:00", 10);
+        restaurantService.updateTimeSlots(roxie.getId(), "17-08-2025", "13:00", 10);
+        restaurantService.updateTimeSlots(roxie.getId(), "17-08-2025", "16:00", 10);
+
+
         System.out.println("################ SEARCH RESTAURANTS ################################");
 
         Filter filter = new AndFilter(new CityFilter("bangalore"), new VegFilter(false));
@@ -63,7 +71,7 @@ public class App {
             }
         }
 
-        filter = new CuisingFilter(Cuisine.AMERICAN);
+        filter = new CuisineFilter(Cuisine.AMERICAN);
         foundRestaurants = restaurantService.searchRestaurant(filter);
         if (foundRestaurants.isEmpty()) {
             System.out.println("No restaurants found with the specified criteria.");
