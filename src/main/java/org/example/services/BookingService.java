@@ -15,15 +15,22 @@ public class BookingService {
     private final RestaurantService restaurantService;
     private final BookingRepository bookingRepository;
 
-    public BookingService(RestaurantService restaurantService,
-                          BookingRepository bookingRepository) {
+    public BookingService (
+            RestaurantService restaurantService,
+            BookingRepository bookingRepository
+    ) {
         this.restaurantService = restaurantService;
         this.bookingRepository = bookingRepository;
     }
 
-
     @SneakyThrows
-    public Optional<Booking> bookTable(String userId, String restaurantId, String date, String time, int numberOfTables) {
+    public Optional<Booking> bookTable (
+            String userId,
+            String restaurantId,
+            String date,
+            String time,
+            int numberOfTables
+    ) {
         // check if the restaurant exists
         Restaurant restaurant = restaurantService.getRestaurantById(restaurantId);
         if (restaurant == null) {
@@ -40,11 +47,13 @@ public class BookingService {
         return createBooking(userId, restaurant, date, time, numberOfTables);
     }
 
-    private synchronized Optional<Booking> createBooking(String userId,
-                                                         Restaurant restaurant,
-                                                         String date,
-                                                         String time,
-                                                         int numberOfTables) {
+    private synchronized Optional<Booking> createBooking (
+            String userId,
+            Restaurant restaurant,
+            String date,
+            String time,
+            int numberOfTables
+    ) {
         // book the slot
         if (restaurant.bookSlot(date, time, numberOfTables)) {
             // create a booking record

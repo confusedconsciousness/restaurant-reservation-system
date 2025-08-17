@@ -13,39 +13,34 @@ public class RestaurantRepositoryImpl implements RestaurantRepository {
     private final Map<String, Restaurant> restaurants = new ConcurrentHashMap<>();
 
     @Override
-    public Restaurant saveRestaurant(Restaurant restaurant) {
+    public Restaurant saveRestaurant (Restaurant restaurant) {
         restaurant.setId(generateRestaurantId());
         restaurants.put(restaurant.getId(), restaurant);
         return restaurant;
     }
 
     @Override
-    public Restaurant getRestaurantById(String restaurantId) {
+    public Restaurant getRestaurantById (String restaurantId) {
         return restaurants.get(restaurantId);
     }
 
     @Override
-    public Restaurant updateRestaurant(Restaurant restaurant) {
+    public Restaurant updateRestaurant (Restaurant restaurant) {
         restaurants.put(restaurant.getId(), restaurant);
         return restaurant;
     }
 
     @Override
-    public List<Restaurant> getAllRestaurants() {
+    public List<Restaurant> getAllRestaurants () {
         return restaurants.values().stream().toList();
     }
 
     @Override
-    public void deleteRestaurant(String restaurantId) {
+    public void deleteRestaurant (String restaurantId) {
         restaurants.remove(restaurantId);
     }
 
-    @Override
-    public void updateTimeSlot(String restaurantId, double timeSlot) {
-
-    }
-
-    private String generateRestaurantId() {
+    private String generateRestaurantId () {
         return "R" + counter.getAndIncrement();
     }
 }

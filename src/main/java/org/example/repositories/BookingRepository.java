@@ -5,7 +5,7 @@ import org.example.models.Booking;
 import java.util.Optional;
 
 public interface BookingRepository {
-    Booking save(Booking booking);
+    Booking save (Booking booking);
 
-    Optional<Booking> findById(String id);
+    Optional<Booking> findById (String id);
 }

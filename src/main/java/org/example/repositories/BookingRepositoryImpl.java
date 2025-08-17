@@ -12,7 +12,7 @@ public class BookingRepositoryImpl implements BookingRepository {
     private final Map<String, Booking> bookings = new ConcurrentHashMap<>();
 
     @Override
-    public Booking save(Booking booking) {
+    public Booking save (Booking booking) {
         if (booking == null) {
             throw new IllegalArgumentException("Booking cannot be null");
         }
@@ -23,11 +23,11 @@ public class BookingRepositoryImpl implements BookingRepository {
     }
 
     @Override
-    public Optional<Booking> findById(String id) {
+    public Optional<Booking> findById (String id) {
         return Optional.of(bookings.get(id));
     }
 
-    private String generateBookingId() {
+    private String generateBookingId () {
         return "B" + counter.getAndIncrement();
     }
 }

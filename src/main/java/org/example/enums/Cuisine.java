@@ -14,11 +14,11 @@ public enum Cuisine {
 
     private final String displayName;
 
-    Cuisine(String displayName) {
+    Cuisine (String displayName) {
         this.displayName = displayName;
     }
 
-    public String getDisplayName() {
+    public String getDisplayName () {
         return displayName;
     }
 }

@@ -12,20 +12,23 @@ import java.util.Set;
 public class RestaurantService {
     private final RestaurantRepository repository;
 
-    public RestaurantService(RestaurantRepository repository) {
+    public RestaurantService (RestaurantRepository repository) {
         this.repository = repository;
     }
 
-    public Restaurant registerRestaurant(String name, Set<Cuisine> cuisines,
-                                         boolean veg,
-                                         String street,
-                                         String city,
-                                         String state,
-                                         String zip,
-                                         String phoneNumber,
-                                         double costOfTwo,
-                                         String openingHour,
-                                         String closingHour) {
+    public Restaurant registerRestaurant (
+            String name,
+            Set<Cuisine> cuisines,
+            boolean veg,
+            String street,
+            String city,
+            String state,
+            String zip,
+            String phoneNumber,
+            double costOfTwo,
+            String openingHour,
+            String closingHour
+    ) {
         // we can check if this restaurant already exists in the database
         if (name == null || name.isEmpty()) {
             throw new IllegalArgumentException("Restaurant name cannot be null or empty");
@@ -48,14 +51,19 @@ public class RestaurantService {
         return repository.saveRestaurant(restaurant);
     }
 
-    public void updateTimeSlots(String restaurantId, String date, String time, int numberOfTables) {
+    public void updateTimeSlots (
+            String restaurantId,
+            String date,
+            String time,
+            int numberOfTables
+    ) {
         Restaurant restaurant = repository.getRestaurantById(restaurantId);
         if (restaurant != null) {
             restaurant.addSlot(date, time, numberOfTables);
         }
     }
 
-    public List<Restaurant> searchRestaurant(Filter filter) {
+    public List<Restaurant> searchRestaurant (Filter filter) {
         List<Restaurant> restaurants = repository.getAllRestaurants();
         if (filter == null) {
             return restaurants; // No filter applied, return all restaurants
@@ -64,7 +72,7 @@ public class RestaurantService {
                 .toList();
     }
 
-    public Restaurant getRestaurantById(String id) {
+    public Restaurant getRestaurantById (String id) {
         return repository.getRestaurantById(id);
     }
 }

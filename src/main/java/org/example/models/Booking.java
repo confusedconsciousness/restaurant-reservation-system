@@ -1,6 +1,5 @@
 package org.example.models;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.example.enums.BookingStatus;
@@ -16,7 +15,13 @@ public class Booking {
     private int noOfPeople;
     private BookingStatus bookingStatus;
 
-    public Booking(String userId, String restaurantId, String date, String time, int noOfTables) {
+    public Booking (
+            String userId,
+            String restaurantId,
+            String date,
+            String time,
+            int noOfTables
+    ) {
         this.userId = userId;
         this.restaurantId = restaurantId;
         this.date = date;
